@@ -48,23 +48,74 @@ public class Resolution {
 		addressutils.GetAddress(txt1);//参数中不能有“#”，要去掉，使用txt1
 		
 		//未处理具体地址中包含市县的情况
+		String province =addr.getProvince();
 		String county=addr.getCounty();
 		String city=addr.getCity();
-		int countyIndex=txt.indexOf(county);
-		if(countyIndex==-1||county==""||countyIndex==0)
+		int l=province.length()+county.length()+city.length();
+		String txtCheck=txt.substring(0, l);
+		int index=0;
+		//地址中是否有省
+		if(province.length()>0)
 		{
-			int cityIndex=txt.indexOf(city);
-			if(cityIndex==-1)
+			if(txtCheck.indexOf(province.substring(0, province.length()-1))!=-1)
 			{
-				city=city.substring(0, city.length()-1);
-				cityIndex=txt.indexOf(city);
+				index+=province.length()-1;
+				if(txtCheck.indexOf(province)!=-1)
+					index++;
 			}
-			txt=txt.substring(cityIndex+city.length());
+			else
+			{
+				addr.setProvince("");
+			}
 		}
-		else
+		
+		//地址中是否有市
+		if(city.length()>0)
 		{
-			txt=txt.substring(countyIndex+county.length());
+			if(txtCheck.indexOf(city.substring(0, province.length()-1))!=-1)
+			{
+				index+=city.length()-1;
+				if(txtCheck.indexOf(city)!=-1)
+					index++;
+			}
+			else
+			{
+				addr.setCity("");
+			}
 		}
+
+		//地址中是否有县
+		if(county.length()>0)
+		{
+			if(txtCheck.indexOf(county.substring(0, county.length()-1))!=-1)
+			{
+				index+=county.length()-1;
+				if(txtCheck.indexOf(county)!=-1)
+					index++;
+			}
+			else
+			{
+				addr.setCounty("");
+			}
+		}
+
+		txt=txt.substring(index);
+		
+//		int countyIndex=txt.indexOf(county);
+//		if(countyIndex==-1||county==""||countyIndex==0)
+//		{
+//			int cityIndex=txt.indexOf(city);
+//			if(cityIndex==-1)
+//			{
+//				city=city.substring(0, city.length()-1);
+//				cityIndex=txt.indexOf(city);
+//			}
+//			txt=txt.substring(cityIndex+city.length());
+//		}
+//		else
+//		{
+//			txt=txt.substring(countyIndex+county.length());
+//		}
 
 		addressutils.addressResolution(txt, flag);
 		
