@@ -86,10 +86,37 @@ public class AddressUtils {
 //			addressInfo.setLocation(result.getString("location"));
 		
 		//百度api
-		dataOfJson=dataOfJson.getJSONObject("result");
-		dataOfJson=dataOfJson.getJSONObject("location");
-		addressInfo.setLng(dataOfJson.getDouble("lng"));//经度
-		addressInfo.setLat(dataOfJson.getDouble("lat"));//纬度
+		if(dataOfJson.isNullObject())
+		{
+			addressInfo.setLng(116.0);//经度
+			addressInfo.setLat(39.0);//纬度
+		}
+		else
+		{
+			dataOfJson=dataOfJson.getJSONObject("result");
+			if(dataOfJson.isNullObject())
+			{
+				addressInfo.setLng(116.0);//经度
+				addressInfo.setLat(39.0);//纬度
+			}
+			else
+			{
+				dataOfJson=dataOfJson.getJSONObject("location");
+				if(dataOfJson.isNullObject())
+				{
+					addressInfo.setLng(116.0);//经度
+					addressInfo.setLat(39.0);//纬度
+				}
+				else
+				{
+					addressInfo.setLng(dataOfJson.getDouble("lng"));//经度
+					addressInfo.setLat(dataOfJson.getDouble("lat"));//纬度
+				}
+
+			}
+
+		}
+
 		
 		String info=GetAddressData2(addressInfo.getLng(), addressInfo.getLat());
 		addressInfo=AddressUtils.GetAddress2(info);
@@ -180,11 +207,41 @@ public class AddressUtils {
 //		addressInfo.setLng(dataOfJson.getDouble("lng"));//经度
 //		addressInfo.setLat(dataOfJson.getDouble("lat"));//纬度
 //		
-		dataOfJson=dataOfJson.getJSONObject("result");
-		dataOfJson=dataOfJson.getJSONObject("addressComponent");
-		addressInfo.setProvince(dataOfJson.getString("province"));
-		addressInfo.setCity(dataOfJson.getString("city"));
-		addressInfo.setCounty(dataOfJson.getString("district"));
+		if(dataOfJson.isNullObject())
+		{
+			addressInfo.setProvince("");
+			addressInfo.setCity("");
+			addressInfo.setCounty("");
+		}
+		else
+		{
+			dataOfJson=dataOfJson.getJSONObject("result");
+			if(dataOfJson.isNullObject())
+			{
+				addressInfo.setProvince("");
+				addressInfo.setCity("");
+				addressInfo.setCounty("");
+			}
+			else
+			{
+				dataOfJson=dataOfJson.getJSONObject("addressComponent");
+				if(dataOfJson.isNullObject())
+				{
+					addressInfo.setProvince("");
+					addressInfo.setCity("");
+					addressInfo.setCounty("");
+				}
+				else
+				{
+					addressInfo.setProvince(dataOfJson.getString("province"));
+					addressInfo.setCity(dataOfJson.getString("city"));
+					addressInfo.setCounty(dataOfJson.getString("district"));
+				}
+
+			}
+
+		}
+
 		
 		//确认直辖市省份信息
 		String prov=addressInfo.getProvince();
@@ -196,6 +253,8 @@ public class AddressUtils {
 
 		return addressInfo;
 	}
+	
+	
 	/**
 	 * 处理后几级地址信息
 	 * @param address
@@ -229,6 +288,7 @@ public class AddressUtils {
                 village2=m.group("village2");
                 village3=m.group("village3");
             }
+            
             addressInfo.setTown(town==null?"":town.trim());
             addressInfo.setVillage1(village1==null?"":village1.trim());
             addressInfo.setVillage2(village2==null?"":village2.trim());

@@ -72,7 +72,7 @@ public class Resolution {
 		//地址中是否有市
 		if(city.length()>0)
 		{
-			if(txtCheck.indexOf(city.substring(0, province.length()-1))!=-1)
+			if(txtCheck.indexOf(city.substring(0, city.length()-1))!=-1)
 			{
 				index+=city.length()-1;
 				if(txtCheck.indexOf(city)!=-1)
