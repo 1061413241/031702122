@@ -1,4 +1,4 @@
-package AddressBook;
+//package AddressBook;
 
 
 //import org.apache.commons.lang3.StringUtils;
@@ -15,12 +15,12 @@ public class Main {
 	public static void main(String[] args) {
 		
 		try {
-            //File f = new File(args[0]);
-            File f = new File("in.txt");
+            File f = new File(args[0]);
+            //File f = new File("in.txt");
             BufferedReader r = new BufferedReader(new InputStreamReader(new FileInputStream(f), "utf-8"));
-        //    BufferedWriter out = new BufferedWriter(new FileWriter(args[1]));
-            File f2= new File("2.txt");
-            BufferedWriter out = new BufferedWriter(new FileWriter(f2));
+            BufferedWriter out = new BufferedWriter(new FileWriter(args[1]));
+            //File f2= new File("2.txt");
+            //BufferedWriter out = new BufferedWriter(new FileWriter(f2));
             String l = null;
             JSONArray array = new JSONArray();
             while ((l = r.readLine()) != null ) 
