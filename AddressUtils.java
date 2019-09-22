@@ -1,4 +1,4 @@
-//package AddressBook;
+package AddressBook;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -276,7 +276,7 @@ public class AddressUtils {
             addressInfo.setTown(town==null?"":town.trim());
             addressInfo.setVillage1(village1==null?"":village1.trim());
         }
-        else if(flag=='2')
+        else if(flag=='2'||flag=='3')
         {
         	String regex="(?<town>[^区]+区|.+?镇|.+?街道|.+?乡)?(?<village1>.+?街|.+?路|.+?巷)?(?<village2>[\\d]+?号|[\\d]+.?道)?(?<village3>.*)";
             Matcher m=Pattern.compile(regex).matcher(address);
