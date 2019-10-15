@@ -1,4 +1,5 @@
 ## AddressBook
+![](https://img.shields.io/cocoapods/v/Alamofire.svg?style=flat)
 
 自动划分地址
 
